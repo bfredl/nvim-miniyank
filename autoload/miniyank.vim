@@ -12,7 +12,7 @@ endfunction
 
 function! miniyank#add_item(list, item) abort
     for n in range(len(a:list))
-        if a:list[n][:2] ==# a:item[:2]
+        if a:list[n][:1] ==# a:item[:1]
             call remove(a:list, n)
             break
         endif
