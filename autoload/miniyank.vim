@@ -2,8 +2,7 @@ function! miniyank#read() abort
     if !filereadable(g:miniyank_filename)
         return []
     end
-    let mpack = readfile(g:miniyank_filename, 'b')
-    return msgpackparse(mpack)
+    return msgpackparse(readfile(g:miniyank_filename, 'b'))
 endfunction
 
 function! miniyank#write(data) abort
@@ -24,7 +23,6 @@ function! miniyank#add_item(list, item) abort
     return a:list
 endfunction
 
-
 function! miniyank#on_yank(event) abort
     if len(a:event.regcontents) == 1 && len(a:event.regcontents[0]) == 1
         return
@@ -40,11 +38,10 @@ function! miniyank#putreg(data,cmd) abort
     call setreg('0', a:data[0], a:data[1])
     execute 'normal! "0'.a:cmd
     call setreg('0', regsave[0], regsave[1])
+    let s:last = a:data[0]
 endfunction
 
 let s:changedtick = -1
-let s:pastelist = []
-let s:cmd = ""
 
 " TODO: put autocommand plz
 function! miniyank#startput(cmd,defer) abort
@@ -74,3 +71,11 @@ function! miniyank#do_putnext() abort
     let s:changedtick = b:changedtick
 endfunction
 
+function! miniyank#force_motion(motion) abort
+    if s:changedtick != b:changedtick
+        return
+    end
+    silent undo
+    call miniyank#putreg([s:last, a:motion], s:cmd)
+    let s:changedtick = b:changedtick
+endfunction
