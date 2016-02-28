@@ -1,5 +1,9 @@
 if !has_key(g:,"miniyank_filename")
-    let g:miniyank_filename = $XDG_RUNTIME_DIR."/miniyank.mpack"
+    if exists('$XDG_RUNTIME_DIR')
+        let g:miniyank_filename = $XDG_RUNTIME_DIR."/miniyank.mpack"
+    else
+        let g:miniyank_filename = "/tmp/".$USER."_miniyank.mpack"
+    endif
 endif
 if !has_key(g:,"miniyank_maxitems")
     let g:miniyank_maxitems = 10

@@ -24,7 +24,7 @@ and to cycle
 
 ## It doesn't work!
 
-make sure `$XDG_RUNTIME_DIR` is set
+make sure `$XDG_RUNTIME_DIR` is set to a directory that exists.
 
 ## How do I cycle backwards?
 
