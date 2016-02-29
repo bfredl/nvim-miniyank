@@ -4,7 +4,7 @@ The killring-alike plugin with no default mappings.
 
 # Usage
 
-Use neovim with [#4304](https://github.com/neovim/neovim/pull/4304).
+Use neovim master.
 
 Map for instance
 
@@ -16,11 +16,11 @@ or if you want to remap `p` but still support `"xp`
     map p <Plug>(miniyank-autoput)
     map P <Plug>(miniyank-autoPut)
 
-and to cycle
+and right after paste cycle through history:
 
     map <leader>n <Plug>(miniyank-cycle)
 
-Maybe the register type was wrong? Well, you can change it right after paste:
+Maybe the register type was wrong? Well, you can change it after paste:
 
     map <Leader>c <Plug>(miniyank-tochar)
     map <Leader>l <Plug>(miniyank-toline)

@@ -49,7 +49,7 @@ function! miniyank#startput(cmd,defer) abort
     let s:cmd = a:cmd
     let s:visual = index(["v","V","\026"], mode()) >= 0
     if a:defer
-        let first = [getreg(v:register,1,1), getregtype(v:register), v:register]
+        let first = [getreg(v:register,0,1), getregtype(v:register), v:register]
         call miniyank#add_item(s:pastelist, first)
     end
     return ":call miniyank#do_putnext()\015"
