@@ -13,10 +13,10 @@ augroup MiniYank
     au! TextYankPost * call miniyank#on_yank(v:event)
 augroup END
 
-noremap <silent> <Plug>(miniyank-startput) :<c-u>call miniyank#startput("p",0)<cr>
-noremap <silent> <Plug>(miniyank-startPut) :<c-u>call miniyank#startput("P",0)<cr>
-noremap <silent> <Plug>(miniyank-autoput) :<c-u>call miniyank#startput("p",1)<cr>
-noremap <silent> <Plug>(miniyank-autoPut) :<c-u>call miniyank#startput("P",1)<cr>
+noremap <silent> <expr> <Plug>(miniyank-startput) miniyank#startput("p",0)
+noremap <silent> <expr> <Plug>(miniyank-startPut) miniyank#startput("P",0)
+noremap <silent> <expr> <Plug>(miniyank-autoput) miniyank#startput("p",1)
+noremap <silent> <expr> <Plug>(miniyank-autoPut) miniyank#startput("P",1)
 noremap <silent> <Plug>(miniyank-cycle) :<c-u>call miniyank#cycle()<cr>
 
 noremap <silent> <Plug>(miniyank-tochar) :<c-u>call miniyank#force_motion('v')<cr>
