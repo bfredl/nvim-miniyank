@@ -24,7 +24,7 @@ function! miniyank#add_item(list, item) abort
 endfunction
 
 function! miniyank#on_yank(event) abort
-    if len(a:event.regcontents) == 1 && len(a:event.regcontents[0]) == 1
+    if len(a:event.regcontents) == 1 && len(a:event.regcontents[0]) <= 1
         return
     end
     let state = miniyank#read()
@@ -52,7 +52,7 @@ function! miniyank#startput(cmd,defer) abort
         let first = [getreg(v:register,0,1), getregtype(v:register), v:register]
         call miniyank#add_item(s:pastelist, first)
     end
-    return ":call miniyank#do_putnext()\015"
+    return ":\<c-u>call miniyank#do_putnext()\015"
 endfunction
 
 function! miniyank#cycle() abort
