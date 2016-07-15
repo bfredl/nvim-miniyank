@@ -36,7 +36,7 @@ endfunction
 function! miniyank#putreg(data,cmd) abort
     let regsave = [getreg('0'), getregtype('0')]
     call setreg('0', a:data[0], a:data[1])
-    execute 'normal! '.(s:visual ? 'gv' : '').'"0'.a:cmd
+    execute 'normal! '.(s:visual ? 'gv' : '').s:count.'"0'.a:cmd
     call setreg('0', regsave[0], regsave[1])
     let s:last = a:data[0]
 endfunction
@@ -48,6 +48,7 @@ function! miniyank#startput(cmd,defer) abort
     let s:pastelist = miniyank#read()
     let s:cmd = a:cmd
     let s:visual = index(["v","V","\026"], mode()) >= 0
+    let s:count = string(v:count1)
     if a:defer
         let first = [getreg(v:register,0,1), getregtype(v:register), v:register]
         call miniyank#add_item(s:pastelist, first)
