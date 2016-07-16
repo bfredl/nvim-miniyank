@@ -10,7 +10,7 @@ if !has_key(g:,"miniyank_maxitems")
 endif
 
 augroup MiniYank
-    au! TextYankPost * call miniyank#on_yank(v:event)
+    au! TextYankPost * call miniyank#on_yank(copy(v:event))
 augroup END
 
 noremap <silent> <expr> <Plug>(miniyank-startput) miniyank#startput("p",0)
