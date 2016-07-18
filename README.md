@@ -6,21 +6,21 @@ The killring-alike plugin with no default mappings.
 
 Use neovim master.
 
-Map for instance
+Startput mapping is used to start putting from the yank history, which is shared between nvim instances:
 
     map <leader>p <Plug>(miniyank-startput)
     map <leader>P <Plug>(miniyank-startPut)
 
-or if you want to remap `p` but still support `"xp`
+If you want to remap `p` it is better to use "autoput", which will always first put the text that nonremapped "p" would have anyway, and thus still support `"xp` and `clipboard=unnamed[plus]`:
 
     map p <Plug>(miniyank-autoput)
     map P <Plug>(miniyank-autoPut)
 
-and right after paste cycle through history:
+Right after a put, use "cycle" to go back through history:
 
     map <leader>n <Plug>(miniyank-cycle)
 
-Maybe the register type was wrong? Well, you can change it after paste:
+Maybe the register type was wrong? Well, you can change it after putting:
 
     map <Leader>c <Plug>(miniyank-tochar)
     map <Leader>l <Plug>(miniyank-toline)
