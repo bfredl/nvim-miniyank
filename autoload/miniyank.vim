@@ -119,3 +119,12 @@ function! miniyank#force_motion(motion) abort
     call miniyank#putreg([s:last, a:motion], s:cmd)
     let s:changedtick = b:changedtick
 endfunction
+
+" FIXME: integrate with the rest
+function! miniyank#drop(data,cmd) abort
+    let s:pastelist = [a:data]
+    let s:visual = ''
+    let s:count = 1
+    let s:cmd = a:cmd
+    call miniyank#do_putnext()
+endfunction
