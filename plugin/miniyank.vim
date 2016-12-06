@@ -1,3 +1,7 @@
+if !exists('##TextYankPost')
+    finish
+endif
+
 if !has_key(g:,"miniyank_filename")
     if exists('$XDG_RUNTIME_DIR')
         let g:miniyank_filename = $XDG_RUNTIME_DIR."/miniyank.mpack"
