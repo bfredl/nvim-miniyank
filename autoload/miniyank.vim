@@ -78,6 +78,9 @@ let s:changedtick = -1
 
 " TODO: put autocommand plz
 function! miniyank#startput(cmd,defer) abort
+    if mode(1) ==# "no"
+        return a:cmd " don't override diffput
+    end
     let s:pastelist = miniyank#read()
     let s:cmd = a:cmd
     let s:visual = index(["v","V","\026"], mode()) >= 0
