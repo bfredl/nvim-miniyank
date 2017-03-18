@@ -4,17 +4,19 @@ The killring-alike plugin with no default mappings.
 
 # Usage
 
-Use neovim master.
+Use recent neovim. Yanks and deletes will be detected using `TextYankPost` autocommand, so no mappings for these actions are needed.
+The yank history is shared between nvim instances.
 
-Startput mapping is used to start putting from the yank history, which is shared between nvim instances:
-
-    map <leader>p <Plug>(miniyank-startput)
-    map <leader>P <Plug>(miniyank-startPut)
-
-If you want to remap `p` it is better to use "autoput", which will always first put the text that nonremapped "p" would have anyway, and thus still support `"xp` and `clipboard=unnamed[plus]`:
+There is two different mappings for starting to put from the history.
+To remap `p`, "autoput" mapping should be used. This will first put the same text as unmapped "p" would have, and still support `"xp` and `clipboard=unnamed[plus]`:
 
     map p <Plug>(miniyank-autoput)
     map P <Plug>(miniyank-autoPut)
+
+"startput" will directly put the most recent item in the shared history:
+
+    map <leader>p <Plug>(miniyank-startput)
+    map <leader>P <Plug>(miniyank-startPut)
 
 Right after a put, use "cycle" to go back through history:
 
@@ -31,11 +33,19 @@ Currently neovim doesn't have support for register types in the clipboard. This 
 
 Of course, regardless if `clipboard=unnamed` is set or not, you can always do the correct paste using a "startPut" mapping, or cycling one step back in history when needed.
 
+# Denite source
+
+If Denite is installed, the yank history can be displayed using `:Denite miniyank`
+
 # FAQ
 
 ## It doesn't work!
 
 make sure `$XDG_RUNTIME_DIR` is set to a directory that exists.
+
+## Is python3 required?
+
+Python is only required for the optional Denite source. The rest of the plugin is pure vimscript.
 
 ## How do I cycle backwards?
 
