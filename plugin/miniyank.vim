@@ -9,8 +9,13 @@ if !has_key(g:,"miniyank_filename")
         let g:miniyank_filename = "/tmp/".$USER."_miniyank.mpack"
     endif
 endif
+
 if !has_key(g:,"miniyank_maxitems")
     let g:miniyank_maxitems = 10
+endif
+
+if !has_key(g:,"miniyank_delete_maxlines")
+    let g:miniyank_delete_maxlines = 1000
 endif
 
 augroup MiniYank

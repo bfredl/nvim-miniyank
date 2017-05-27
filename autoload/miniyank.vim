@@ -35,15 +35,20 @@ function! miniyank#parse_cb() abort
     return cbs
 endfunction
 
-function! miniyank#on_yank(event) abort
-    if len(a:event.regcontents) == 1 && len(a:event.regcontents[0]) <= 1
+function! miniyank#on_yank(ev) abort
+    if len(a:ev.regcontents) == 1 && len(a:ev.regcontents[0]) <= 1
+        return
+    end
+    " avoid expensive copying on delete unless yanking to a register was
+    " explcitly requested
+    if a:ev.operator != 'y' && a:ev.regname == '' && len(a:ev.regcontents) > g:miniyank_delete_maxlines
         return
     end
     let state = miniyank#read()
-    if a:event.regname == ''
-        let a:event.regname = miniyank#parse_cb()
+    if a:ev.regname == ''
+        let a:ev.regname = miniyank#parse_cb()
     endif
-    call miniyank#add_item(state, [a:event.regcontents, a:event.regtype, a:event.regname])
+    call miniyank#add_item(state, [a:ev.regcontents, a:ev.regtype, a:ev.regname])
     call miniyank#write(state)
 endfunction
 
