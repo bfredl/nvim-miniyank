@@ -55,6 +55,12 @@ Python is only required for the optional Denite source. The rest of the plugin i
 
 use `g-`
 
+## 10 items? That is not close to be enough!
+
+How about
+
+    let g:miniyank_maxitems = 100
+
 ## It doesn't persist across reboots!
 
 Sigh, just why? Okay, do
