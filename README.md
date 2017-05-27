@@ -28,10 +28,14 @@ Maybe the register type was wrong? Well, you can change it after putting:
     map <Leader>l <Plug>(miniyank-toline)
     map <Leader>b <Plug>(miniyank-toblock)
 
-# clipboard=unnamed register type fixing!
+# clipboard=unnamed register type fixing
 Currently neovim doesn't have support for register types in the clipboard. This makes blockwise yanking and putting broken when `clipboard=unnamed` or `unnamedplus` is used. When this option is set, and "p" is mapped to "autoput" mappings as suggested above, this plugin will try to _correct_ the register type when an unnamed paste is done. It uses heuristics that _at least_ will work if you yank blockwise and then immediately paste unnamed in the same or another nvim instance.
 
 Of course, regardless if `clipboard=unnamed` is set or not, you can always do the correct paste using a "startPut" mapping, or cycling one step back in history when needed.
+
+# Throttling of big unnamed deletes
+
+The plugin tries to avoid unnecessary copying on unnamed deletes (`d` or `c` with no preceeding `"x`). Unnamed deletes with more than `g:miniyank_delete_maxlines` (default 1000) will be ignored. To force yanking, just add a register name, like `""d` or `"*d`.
 
 # Denite source
 
