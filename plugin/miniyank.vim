@@ -21,6 +21,10 @@ endif
 augroup MiniYank
     au! TextYankPost * call miniyank#on_yank(copy(v:event))
     au VimEnter * let g:miniyank_default_register = v:register
+          \| noremap <Plug>(bare_p) p
+          \| noremap <Plug>(bare_P) P
+          \| execute 'noremap "' . v:register . 'p <Plug>(bare_p)'
+          \| execute 'noremap "' . v:register . 'P <Plug>(bare_P)'
 augroup END
 
 noremap <silent> <expr> <Plug>(miniyank-startput) miniyank#startput("p")
