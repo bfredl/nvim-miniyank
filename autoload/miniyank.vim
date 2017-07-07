@@ -26,10 +26,10 @@ endfunction
 function! miniyank#parse_cb() abort
     let parts = split(&clipboard, ',')
     let cbs = ''
-    if index(parts, "unnamed") >= 0
+    if index(parts, 'unnamed') >= 0
         let cbs = cbs.'*'
     endif
-    if index(parts, "unnamedplus") >= 0
+    if index(parts, 'unnamedplus') >= 0
         let cbs = cbs.'+'
     endif
     return cbs
@@ -82,15 +82,15 @@ endfunction
 let s:changedtick = -1
 
 " TODO: put autocommand plz
-function! miniyank#startput(cmd,defer) abort
-    if mode(1) ==# "no"
+function! miniyank#startput(cmd) abort
+    if mode(1) ==# 'no'
         return a:cmd " don't override diffput
     end
     let s:pastelist = miniyank#read()
     let s:cmd = a:cmd
-    let s:visual = index(["v","V","\026"], mode()) >= 0
+    let s:visual = index(['v','V','\026'], mode()) >= 0
     let s:count = string(v:count1)
-    if a:defer
+    if (g:miniyank_default_register != v:register)
         let first = [getreg(v:register,0,1), getregtype(v:register), v:register]
         if !miniyank#fix_clip(s:pastelist, first)
             call miniyank#add_item(s:pastelist, first)
@@ -109,7 +109,7 @@ endfunction
 
 function! miniyank#do_putnext() abort
     if s:pastelist == []
-        echoerr "miniyank: no more items!"
+        echoerr 'miniyank: no more items!'
         return
     endif
     call miniyank#putreg(remove(s:pastelist,0),s:cmd)
