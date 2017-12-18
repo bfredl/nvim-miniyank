@@ -1,11 +1,31 @@
+if has("nvim")
+    let s:lua = v:false
+else
+    if !has("lua")
+       finish
+    endif
+    let s:lua = v:true
+    let s:plug_path = expand( '<sfile>:p:h:h')
+    lua <<EOF
+        package.path = package.path .. ';'.. vim.eval("expand( '<sfile>:p:h:h')")..'/lua/?.lua'
+        miniyank = require"miniyank"
+EOF
+endif
+
 function! miniyank#read() abort
     if !filereadable(g:miniyank_filename)
         return []
+    end
+    if s:lua
+        return luaeval("miniyank.read(_A)",g:miniyank_filename)
     end
     return msgpackparse(readfile(g:miniyank_filename, 'b'))
 endfunction
 
 function! miniyank#write(data) abort
+    if s:lua
+        return luaeval("miniyank.write(_A[0], _A[1])",[g:miniyank_filename,a:data])
+    end
     call writefile(msgpackdump(a:data), g:miniyank_filename, 'b')
 endfunction
 
@@ -65,6 +85,9 @@ endfunction
 " only use this when clipboard=unnamed[plus]
 " otherwise you are expected to use startput
 function! miniyank#fix_clip(list, pasted) abort
+    if !has("nvim")
+        return v:false
+    end
     if stridx('*+', a:pasted[2]) < 0 || miniyank#parse_cb() ==# '' || len(a:list) == 0
         return v:false
     endif

@@ -2,10 +2,12 @@
 
 The killring-alike plugin with no default mappings.
 
+Works in neovim, as well as vim with lua enabled and patch 8.0.1394.
+
 # Usage
 
-Use recent neovim. Yanks and deletes will be detected using `TextYankPost` autocommand, so no mappings for these actions are needed.
-The yank history is shared between nvim instances.
+Yanks and deletes will be detected using `TextYankPost` autocommand, so no mappings for these actions are needed.
+The yank history is shared between [n]vim instances.
 
 There is two different mappings for starting to put from the history.
 To remap `p`, "autoput" mapping should be used. This will first put the same text as unmapped "p" would have, and still support `"xp` and `clipboard=unnamed[plus]`:
@@ -42,6 +44,10 @@ The plugin tries to avoid unnecessary copying on unnamed deletes (`d` or `c` wit
 If Denite is installed, the yank history can be displayed using `:Denite miniyank`
 
 # FAQ
+
+## Does it work in vim 8?
+
+Yes, if lua is enabled and patch 8.0.1394 is included, which is very recent at time of writing. (Lua is not really intrinsically needed. One day I might implement the small necessary subset of msgpack directly in vimscript.)
 
 ## It doesn't work!
 
