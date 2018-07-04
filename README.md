@@ -51,7 +51,12 @@ Yes, if lua is enabled and patch 8.0.1394 is included, which is very recent at t
 
 ## It doesn't work!
 
-make sure `$XDG_RUNTIME_DIR` is set to a directory that exists.
+This plugin tries to autodetect a suitable file path for the shared yankring. `$XDG_RUNTIME_DIR` is used if set, otherwise  `stdpath('cache')` will be used. Check that `g:miniyank_filename` was set to a location that is both readable and writeable by your user account. If not, either fix your environment, or override it manually:
+
+
+    let g:miniyank_filename = $HOME."/.miniyank.mpack"
+
+
 
 ## Is python3 required?
 

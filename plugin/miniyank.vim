@@ -10,6 +10,8 @@ endif
 if !has_key(g:,"miniyank_filename")
     if exists('$XDG_RUNTIME_DIR')
         let g:miniyank_filename = $XDG_RUNTIME_DIR."/miniyank.mpack"
+    elseif exists('*stdpath')
+        let g:miniyank_filename = stdpath('cache')."/miniyank.mpack"
     else
         let g:miniyank_filename = "/tmp/".$USER."_miniyank.mpack"
     endif
