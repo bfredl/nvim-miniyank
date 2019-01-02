@@ -20,9 +20,13 @@ To remap `p`, "autoput" mapping should be used. This will first put the same tex
     map <leader>p <Plug>(miniyank-startput)
     map <leader>P <Plug>(miniyank-startPut)
 
-Right after a put, use "cycle" to go back through history:
+Right after a put, use "cycle" to go through history:
 
     map <leader>n <Plug>(miniyank-cycle)
+
+Stepped too far? You can cycle back to more recent items using:
+
+    map <leader>N <Plug>(miniyank-cycleback)
 
 Maybe the register type was wrong? Well, you can change it after putting:
 
@@ -47,7 +51,7 @@ If Denite is installed, the yank history can be displayed using `:Denite miniyan
 
 ## Does it work in vim 8?
 
-Yes, if lua is enabled and patch 8.0.1394 is included, which is very recent at time of writing. (Lua is not really intrinsically needed. One day I might implement the small necessary subset of msgpack directly in vimscript.)
+Yes, if lua is enabled and with vim 8.1 or later. (Lua is not really intrinsically needed. One day I might implement the small necessary subset of msgpack directly in vimL.)
 
 ## It doesn't work!
 
@@ -61,10 +65,6 @@ This plugin tries to autodetect a suitable file path for the shared yankring. `$
 ## Is python3 required?
 
 Python is only required for the optional Denite source. The rest of the plugin is pure vimscript.
-
-## How do I cycle backwards?
-
-use `g-`
 
 ## 10 items? That is not close to be enough!
 
