@@ -8,7 +8,7 @@ else
     let s:plug_path = expand( '<sfile>:p:h:h')
     lua <<EOF
         package.path = package.path .. ';'.. vim.eval("expand( '<sfile>:p:h:h')")..'/lua/?.lua'
-        miniyank = require"miniyank"
+        miniyank = require'miniyank'
 EOF
 endif
 
@@ -110,6 +110,7 @@ function! miniyank#startput(cmd,defer) abort
         return a:cmd " don't override diffput
     end
     let s:pastelist = miniyank#read()
+    let s:pos = 0
     let s:cmd = a:cmd
     let s:visual = index(["v","V","\026"], mode()) >= 0
     let s:count = string(v:count1)
@@ -119,23 +120,31 @@ function! miniyank#startput(cmd,defer) abort
             call miniyank#add_item(s:pastelist, first)
         endif
     end
-    return ":\<c-u>call miniyank#do_putnext()\015"
+    return ":\<c-u>call miniyank#do_putlist()\015"
 endfunction
 
-function! miniyank#cycle() abort
+function! miniyank#cycle(dir) abort
     if s:changedtick != b:changedtick
         return
     end
+    if a:dir > 0 " forward
+      if s:pos+a:dir >= len(s:pastelist)
+          echoerr "miniyank: no more items!"
+          return
+      endif
+    elseif a:dir < 0 " backward
+      if s:pos+a:dir < 0
+          echoerr "miniyank: no previous items!"
+          return
+      endif
+    end
+    let s:pos += a:dir
     silent undo
-    call miniyank#do_putnext()
+    call miniyank#do_putlist()
 endfunction
 
-function! miniyank#do_putnext() abort
-    if s:pastelist == []
-        echoerr "miniyank: no more items!"
-        return
-    endif
-    call miniyank#putreg(remove(s:pastelist,0),s:cmd)
+function! miniyank#do_putlist() abort
+    call miniyank#putreg(s:pastelist[s:pos],s:cmd)
     let s:changedtick = b:changedtick
 endfunction
 
@@ -154,5 +163,6 @@ function! miniyank#drop(data,cmd) abort
     let s:visual = ''
     let s:count = 1
     let s:cmd = a:cmd
-    call miniyank#do_putnext()
+    " why not putreg??
+    call miniyank#do_putlist()
 endfunction
