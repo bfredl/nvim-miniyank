@@ -123,22 +123,17 @@ function! miniyank#startput(cmd,defer) abort
     return ":\<c-u>call miniyank#do_putlist()\015"
 endfunction
 
+" get positive mod using `((n % m) + m) % m`
+" `((-10 % 3) + 3) % 3` returns `2`
+function! miniyank#mod(n,m)
+  return ((a:n % a:m) + a:m) % a:m
+endfunction
+
 function! miniyank#cycle(dir) abort
     if s:changedtick != b:changedtick
         return
     end
-    if a:dir > 0 " forward
-      if s:pos+a:dir >= len(s:pastelist)
-          echoerr "miniyank: no more items!"
-          return
-      endif
-    elseif a:dir < 0 " backward
-      if s:pos+a:dir < 0
-          echoerr "miniyank: no previous items!"
-          return
-      endif
-    end
-    let s:pos += a:dir
+    let s:pos = miniyank#mod(s:pos+a:dir, len(s:pastelist))
     silent undo
     call miniyank#do_putlist()
 endfunction
