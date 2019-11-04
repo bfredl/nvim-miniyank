@@ -160,6 +160,7 @@ endfunction
 " FIXME: integrate with the rest
 function! miniyank#drop(data,cmd) abort
     let s:pastelist = [a:data]
+    let s:pos = 0
     let s:visual = ''
     let s:count = 1
     let s:cmd = a:cmd
