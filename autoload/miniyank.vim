@@ -103,6 +103,7 @@ function! miniyank#fix_clip(list, pasted) abort
 endfunction
 
 let s:changedtick = -1
+let s:pos = 0
 
 " TODO: put autocommand plz
 function! miniyank#startput(cmd,defer) abort
