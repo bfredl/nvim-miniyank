@@ -14,6 +14,7 @@ class Source(Base):
 
     def gather_candidates(self, context):
         data = self.vim.call("miniyank#read")
-        return [{'word': '\\n'.join(d[0]), 'action__data': d}
-                for d in data]
-
+        return [
+            {'word': '\\n'.join(d[0]), 'action__data': d, 'action__index': i}
+            for i, d in enumerate(data)
+        ]
