@@ -129,12 +129,16 @@ function! miniyank#cycle(dir) abort
     end
     if a:dir > 0 " forward
       if s:pos+a:dir >= len(s:pastelist)
-          echoerr "miniyank: no more items!"
+          if g:miniyank_show_error == 1
+              echoerr "miniyank: no more items!"
+          endif
           return
       endif
     elseif a:dir < 0 " backward
       if s:pos+a:dir < 0
-          echoerr "miniyank: no previous items!"
+          if g:miniyank_show_error == 1
+              echoerr "miniyank: no previous items!"
+          endif
           return
       endif
     end
