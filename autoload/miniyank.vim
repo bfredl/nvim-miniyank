@@ -24,7 +24,7 @@ endfunction
 
 function! miniyank#write(data) abort
     if s:lua
-        return luaeval("miniyank.write(_A[0], _A[1])",[g:miniyank_filename,a:data])
+        return luaeval("miniyank.write(_A[1], _A[2])",[g:miniyank_filename,a:data])
     end
     call writefile(msgpackdump(a:data), g:miniyank_filename, 'b')
 endfunction
